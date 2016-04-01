@@ -114,7 +114,7 @@
             },
 
             /**
-             * 
+             * 显示遮罩层
              */
             show : function(){
                 var mask = this._getMaskElement();
