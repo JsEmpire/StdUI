@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" language="JavaScript" src="freamwork/jquery-1.12.2.js"></script>
+    <script type="text/javascript" language="JavaScript" src="js/window.js"></script>
+    <style>
+        .x-win{
+            width: 600px;
+            height: 600px;
+            position: absolute;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: none;
+            background-color: white;
+        }
+        .x-win-header{
+            background-color: #2D89EF;
+            border: 1px solid #2D89EF;
+            height: 35px;
+            line-height: 35px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 0 10px;
+        }
+        .x-win-body{
+            border-color: #ccc;
+            border-style: solid;
+            border-width: 0px 1px;
+        }
+        .x-win-toolbar{
+            border-color: #ccc;
+            border-style: solid;
+            border-width: 0px 1px 1px 1px;
+            height: 43px;
+            line-height: 43px;
+            text-align: center;
+        }
+        .x-win-toolbar button{
+            height: 35px;
+            width: 80px;
+        }
+        .x-mask{
+            position: absolute;
+            top:0px;
+            left:0px;
+            right: 0px;
+            bottom: 0px;
+            z-index: 99;
+            background-color: rgba(235, 235, 235, 0.5);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="openWin()">Open</a>
+<!--<div id="mymask" class="x-mask"></div>
+<div id="win" class="x-win">
+    <div class="x-win-header">This is a window</div>
+    <div class="x-win-body"></div>
+    <div class="x-win-toolbar">
+        <button class="x-win-btn-ok">OK</button>
+        <button class="x-win-btn-cancel">Cancel</button>
+    </div>
+</div>-->
+<div id="mywin" class="x-win-body"></div>
+
+</body>
+<script language="JavaScript">
+
+    /*$.fn.window = function(){
+
+    }
+    $.fn.mask = function(){
+
+    }*/
+
+    /*$.prototype = {
+        mask:{
+            show:function(){
+                console.log($('.x-mask'));
+            }
+        }
+    }*/
+
+    /**
+     * Generate a random id.
+     */
+    /*$.mask.maskId = 'mymask';
+    $.mask.show();
+    setTimeout(function(){
+        $.mask.hide();
+    },5000);
+    console.log($.mask);*/
+    $().window({
+        listeners:{
+            afterRender:function(ok){
+                console.log('afterRender')
+                console.log(this);
+                console.log(ok);
+            }
+        }
+    });
+
+    //$.mask.show();
+    /*function openWin(){
+        $('.x-mask').show();
+        $('#win').show();
+
+        //center
+        var fullWidth = document.documentElement.clientWidth;
+        var fullHeight = document.documentElement.clientHeight;
+        var winWidth = $('#win').width();
+        var winHeight = $('#win').height();
+        var x = fullWidth/2 - winWidth/2;
+        var y = fullHeight/2 - winHeight/2;
+        $('#win').css({top:y,left:x});
+
+        //auto body height
+        var headerHeight = $('#win .x-win-header').height();
+        var toolbarHeight = $('#win .x-win-toolbar').height();
+        $('#win .x-win-body').css('height',winHeight-headerHeight-toolbarHeight-3);
+    }
+
+    function closeWin(){
+        $('.x-mask').hide();
+        $('#win').hide();
+    }
+
+    $('#win .x-win-btn-ok').bind('click',function(){
+        closeWin();
+    });
+    $('#win .x-win-btn-cancel').bind('click',function(){
+        closeWin();
+    });*/
+
+    /*function createWindow(id,okFun,closeFun){
+        var win = $(id);
+        win.center = function(){
+            var fullWidth = document.documentElement.clientWidth;
+            var fullHeight = document.documentElement.clientHeight;
+            var winWidth = this.width();
+            var winHeight = this.height();
+            var x = fullWidth/2 - winWidth/2;
+            var y = fullHeight/2 - winHeight/2;
+            this.css({top:y,left:x});
+        }
+        win.open = function(){
+            $('.x-mask').show();
+            this.show();
+            this.center();
+        };
+
+        win.close = function(){
+            $('.x-mask').hide();
+            this.hide();
+        };
+
+        win.find('.x-win-btn-ok').bind('click',function(){
+            win.close();
+        });
+        win.find('.x-win-btn-cancel').bind('click',function(){
+            win.close();
+        });
+
+        return win;
+    }*/
+
+    /*var win = createWindow('#win');
+
+
+    function openWin(){
+        win.open();
+    }*/
+
+</script>
+</html>
