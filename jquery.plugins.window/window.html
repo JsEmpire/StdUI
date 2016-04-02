@@ -3,56 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" language="JavaScript" src="freamwork/jquery-1.12.2.js"></script>
-    <script type="text/javascript" language="JavaScript" src="js/window.js"></script>
-    <style>
-        .x-win{
-            width: 600px;
-            height: 600px;
-            position: absolute;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            z-index: 100;
-            display: none;
-            background-color: white;
-        }
-        .x-win-header{
-            background-color: #2D89EF;
-            border: 1px solid #2D89EF;
-            height: 35px;
-            line-height: 35px;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            padding: 0 10px;
-        }
-        .x-win-body{
-            border-color: #ccc;
-            border-style: solid;
-            border-width: 0px 1px;
-        }
-        .x-win-toolbar{
-            border-color: #ccc;
-            border-style: solid;
-            border-width: 0px 1px 1px 1px;
-            height: 43px;
-            line-height: 43px;
-            text-align: center;
-        }
-        .x-win-toolbar button{
-            height: 35px;
-            width: 80px;
-        }
-        .x-mask{
-            position: absolute;
-            top:0px;
-            left:0px;
-            right: 0px;
-            bottom: 0px;
-            z-index: 99;
-            background-color: rgba(235, 235, 235, 0.5);
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet/less" type="text/css" href="css/window.less">
+    <script type="text/javascript" language="JavaScript" src="libs/less/less.js"></script>
+    <script type="text/javascript" language="JavaScript" src="libs/jquery/jquery-1.12.2.js"></script>
+    <script type="text/javascript" language="JavaScript" src="src/window.js"></script>
 </head>
 <body>
 <a href="javascript:void(0)" onclick="openWin()">Open</a>
@@ -65,7 +19,9 @@
         <button class="x-win-btn-cancel">Cancel</button>
     </div>
 </div>-->
-<div id="mywin" class="x-win-body"></div>
+<div id="mywin" class="x-win-body">
+    123
+</div>
 
 </body>
 <script language="JavaScript">
@@ -94,15 +50,18 @@
         $.mask.hide();
     },5000);
     console.log($.mask);*/
-    $().window({
+    var myWin = $('#mywin').window({
+        title:'My Window',
         listeners:{
             afterRender:function(ok){
-                console.log('afterRender')
-                console.log(this);
-                console.log(ok);
             }
         }
     });
+
+    function openWin(){
+        myWin.open();
+    }
+
 
     //$.mask.show();
     /*function openWin(){

@@ -45,7 +45,6 @@
                 var scope = scope || this;
                 if(events.hasOwnProperty(eventName)){
                     var handler = events[eventName];
-                    console.log(this)
                     if($.isFunction(handler)){
                         if(arguments.length > 1){
                             var args = [];
@@ -121,6 +120,9 @@
                 mask.show();
             },
 
+            /**
+             * 隐藏遮罩层
+             */
             hide : function(){
                 var mask = this._getMaskElement();
                 mask.hide();
@@ -132,6 +134,11 @@
 
     $.fn.window = function(config){
         var me = this;
+        this.id = 'win-'+$.id();
+        //var container = $('<div class="x-win"></div>');
+        //var winBody =
+
+        //me = $(container);
         $.extend(me,new $.Observable());
 
         me.addEvents('beforeRender','afterRender','onShow','onClose','onYes','onCancel','onOk');
@@ -145,14 +152,21 @@
             listeners:{}
         },config);
 
+        var btnNameAndEventMapper = {
+            ok:{name:'Ok',event:'onOk'},
+            cancel:{name:'Cancel',event:'onCancel'},
+            yes:{name:'Yes',event:'onYes'},
+            no:{name:'No',event:'onNo'}
+        }
+
         $.extend(me,winConfig);
 
         var listeners = me.listeners;
 
-        for(name in listeners){
-            if(listeners.hasOwnProperty(name)){
-                var handler = listeners[name];
-                this.addListener(name,handler);
+        for(eventName in listeners){
+            if(listeners.hasOwnProperty(eventName)){
+                var handler = listeners[eventName];
+                this.addListener(eventName,handler);
             }
         }
 
@@ -160,26 +174,58 @@
 
         $.extend(me,{
             create:function(){
-                var container = $('<div class="x-win"></div>');
-                me.wrapAll(container);
-                var header = $('<div class="x-win-header"></div>').html(me.title);
-                var toolbar = $('<div class="x-win-toolbar"></div>');
+                $.extend(me,{
+                    panel:$('<div id="'+me.id+'" class="x-win"></div>'),
+                    header:$('<div class="x-win-header"></div>').html(me.title),
+                    toolbar:$('<div class="x-win-toolbar"></div>'),
+                    btns:[]
+                })
+
                 $.each(this.buttons,function(i,e){
-                    toolbar.append('<button class="'+me.btnClassPrefix+'-'+e+'">OK</button>');
+                    var btnObj = btnNameAndEventMapper[e];
+                    var btn = $('<button class="'+me.btnClassPrefix+'-'+e+'">'+btnObj.name+'</button>');
+                    btn.click(function(){
+                        me.fireEvent(btnObj.event,me);
+                        me.close();
+                    })
+                    me.toolbar.append(btn);
+                    me.btns.push(btn);
                 });
-                container.append(header);
-
-                container.append(toolbar);
-                //$('body').append(container);
-                //me.after(header);
-
-                console.log(container.html())
+                me.panel.append(me.header,me,me.toolbar);
+                $('body').append(me.panel);
+            },
+            autoBodyHeight:function(){
+                var winHeight = me.panel.height();
+                var headerHeight = $('.x-win-header').height();
+                var toolbarHeight = $('.x-win-toolbar').height();
+                $('.x-win-body').css('height',winHeight-headerHeight-toolbarHeight-3);
+            },
+            
+            center:function(){
+                var fullWidth = document.documentElement.clientWidth;
+                var fullHeight = document.documentElement.clientHeight;
+                var winWidth = me.panel.width();
+                var winHeight = me.panel.height();
+                var x = fullWidth/2 - winWidth/2;
+                var y = fullHeight/2 - winHeight/2;
+                me.panel.css({top:y,left:x});
+            },
+            open:function(){
+                $.mask.show();
+                me.panel.show();
+                me.center();
+                me.autoBodyHeight();
+                me.fireEvent('onShow',me);
+            },
+            close:function(){
+                $.mask.hide();
+                me.panel.hide();
             }
-        })
+        });
 
         this.create();
 
-
+        return me;
     }
 
 })(jQuery)
