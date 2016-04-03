@@ -21,8 +21,10 @@
 }
 .x-win-body{
   border-color: @default_border_color;
+  box-sizing: border-box;
   border-style: solid;
   border-width: 0px 1px;
+  padding: 10px;
 }
 .x-win-toolbar{
   border: 1px solid @default_border_color;
@@ -32,9 +34,14 @@
   text-align: center;
 }
 .x-win-toolbar button{
-  height: 35px;
+  height: 30px;
   width: 80px;
 }
+
+.x-win-toolbar button:nth-child(n+1){
+  margin-left: 20px;
+}
+
 .x-mask{
   position: absolute;
   top:0px;

@@ -141,7 +141,7 @@
         //me = $(container);
         $.extend(me,new $.Observable());
 
-        me.addEvents('beforeRender','afterRender','onShow','onClose','onYes','onCancel','onOk');
+        me.addEvents('beforeRender','afterRender','onShow','onClose','onYes','onCancel','onOk','onNo');
 
         var winConfig = $.extend({
             height:300,
@@ -193,6 +193,8 @@
                 });
                 me.panel.append(me.header,me,me.toolbar);
                 $('body').append(me.panel);
+
+                me.fireEvent('beforeRender',me);
             },
             autoBodyHeight:function(){
                 var winHeight = me.panel.height();
@@ -220,6 +222,7 @@
             close:function(){
                 $.mask.hide();
                 me.panel.hide();
+                me.fireEvent('onClose',me);
             }
         });
 
