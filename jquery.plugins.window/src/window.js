@@ -1,6 +1,6 @@
 /**
  * Power by CODESTD.COM
- * Licensed to see LICENSE in root. 
+ * Licensed to see the LICENSE file in root.
  */
 (function($){
 
@@ -149,17 +149,21 @@
             title:'',
             btnClassPrefix:'x-win-btn',
             buttons:['ok','cancel'], //ok cancel yes no
+            okText:'确定',
+            cancelText:'取消',
+            yesText:'是',
+            noText:'否',
             listeners:{}
         },config);
 
-        var btnNameAndEventMapper = {
-            ok:{name:'Ok',event:'onOk'},
-            cancel:{name:'Cancel',event:'onCancel'},
-            yes:{name:'Yes',event:'onYes'},
-            no:{name:'No',event:'onNo'}
-        }
-
         $.extend(me,winConfig);
+
+        var btnNameAndEventMapper = {
+            ok:{name:this.okText,event:'onOk'},
+            cancel:{name:this.cancelText,event:'onCancel'},
+            yes:{name:this.yesText,event:'onYes'},
+            no:{name:this.noText,event:'onNo'}
+        }
 
         var listeners = me.listeners;
 
@@ -170,7 +174,7 @@
             }
         }
 
-        me.fireEvent('afterRender',me);
+        me.fireEvent('beforeRender',me);
 
         $.extend(me,{
             create:function(){
@@ -193,8 +197,9 @@
                 });
                 me.panel.append(me.header,me,me.toolbar);
                 $('body').append(me.panel);
-
-                me.fireEvent('beforeRender',me);
+                me.panel.css({width:me.width,height:me.height});
+                if(!me.hasClass('x-win-body'))me.addClass('x-win-body');
+                me.fireEvent('afterRender',me);
             },
             autoBodyHeight:function(){
                 var winHeight = me.panel.height();

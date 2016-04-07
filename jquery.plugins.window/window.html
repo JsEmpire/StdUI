@@ -19,7 +19,7 @@
         <button class="x-win-btn-cancel">Cancel</button>
     </div>
 </div>-->
-<div id="mywin" class="x-win-body">
+<div id="mywin">
     123
 </div>
 
@@ -52,6 +52,8 @@
     console.log($.mask);*/
     var myWin = $('#mywin').window({
         title:'My Window',
+        height:400,
+        width:800,
         listeners:{
             afterRender:function(ok){
             }
